@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    card_view:cardCornerRadius="22dp"
+    card_view:cardElevation="8dp"
+    card_view:cardBackgroundColor="@android:color/white"
+    card_view:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="24dp"
+        android:background="@android:color/transparent">
+
+        <ImageView
+            android:id="@+id/cardIcon"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginBottom="12dp"
+            android:tint="#305039"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerInside" />
+
+        <TextView
+            android:id="@+id/cardTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Titolo"
+            android:textColor="#18321a"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-medium"
+            android:shadowColor="#FFFFFF"
+            android:shadowDx="0"
+            android:shadowDy="1"
+            android:shadowRadius="2"
+            android:gravity="center"
+            android:letterSpacing="0.01"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/cardSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sottotitolo"
+            android:textColor="#4a8f29"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:layout_marginBottom="2dp" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

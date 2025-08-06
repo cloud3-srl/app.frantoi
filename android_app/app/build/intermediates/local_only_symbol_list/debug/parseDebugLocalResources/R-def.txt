@@ -1,0 +1,22 @@
+R_DEF: Internal format may change without notice
+local
+color black
+color white
+drawable ic_launcher_background
+drawable ic_launcher_foreground
+id cardIcon
+id cardSubtitle
+id cardTitle
+id dashboardRecycler
+id headerTitle
+id title
+layout activity_main
+layout item_dashboard_card
+layout item_dashboard_header
+mipmap ic_launcher
+mipmap ic_launcher_round
+string app_name
+style Base.Theme.AppFrantoio
+style Theme.AppFrantoio
+xml backup_rules
+xml data_extraction_rules

@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "/Users/simonecola/.gradle/daemon/9.0.0/com.example.appfrantoio.app-mergeDebugResources-31:/layout/activity_main.xml",
+        "source": "/Users/simonecola/.gradle/daemon/9.0.0/com.example.appfrantoio.app-main-34:/layout/activity_main.xml"
+    },
+    {
+        "merged": "/Users/simonecola/.gradle/daemon/9.0.0/com.example.appfrantoio.app-mergeDebugResources-31:/layout/item_dashboard_card.xml",
+        "source": "/Users/simonecola/.gradle/daemon/9.0.0/com.example.appfrantoio.app-main-34:/layout/item_dashboard_card.xml"
+    },
+    {
+        "merged": "com.example.appfrantoio.app-mergeDebugResources-31:/layout/item_dashboard_header.xml",
+        "source": "com.example.appfrantoio.app-main-34:/layout/item_dashboard_header.xml"
+    }
+]
