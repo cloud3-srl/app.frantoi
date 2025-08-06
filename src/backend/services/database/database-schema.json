@@ -1,0 +1,164 @@
+{
+  "version": "1.1.0",
+  "lastUpdated": "2025-04-19",
+  "tables": {
+    "categorie_olio": {
+      "description": "Tabella delle categorie di olio",
+      "fields": [
+        { "name": "id", "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        { "name": "acronimo", "type": "CHAR(3)", "required": true },
+        { "name": "descrizione", "type": "VARCHAR(200)", "required": true }
+      ]
+    },
+    "macroaree": {
+      "description": "Tabella delle macroaree geografiche",
+      "fields": [
+        { "name": "id", "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        { "name": "acronimo", "type": "CHAR(5)", "required": true },
+        { "name": "descrizione", "type": "VARCHAR(200)", "required": true },
+        { "name": "flag_orig", "type": "BOOLEAN", "default": false }
+      ]
+    },
+    "origini_specifiche": {
+      "description": "Tabella delle origini specifiche",
+      "fields": [
+        { "name": "id", "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        { "name": "acronimo", "type": "CHAR(3)", "required": true },
+        { "name": "descrizione", "type": "VARCHAR(200)", "required": true },
+        { "name": "flag_dop", "type": "BOOLEAN", "default": false },
+        { "name": "flag_raccolta", "type": "BOOLEAN", "default": false },
+        { "name": "flag_molitura", "type": "BOOLEAN", "default": false },
+        { "name": "flag_annata", "type": "BOOLEAN", "default": false },
+        { "name": "flag_colla_da", "type": "BOOLEAN", "default": false },
+        { "name": "flag_colla_a", "type": "BOOLEAN", "default": false },
+        { "name": "flag_capacita", "type": "BOOLEAN", "default": false },
+        { "name": "flag_certifi", "type": "BOOLEAN", "default": false }
+      ]
+    },
+    "nazioni": {
+      "description": "Tabella delle nazioni",
+      "fields": [
+        { "name": "id", "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        { "name": "cod_nazione", "type": "CHAR(3)", "required": true },
+        { "name": "descrizione", "type": "CHAR(60)", "required": true },
+        { "name": "cod_istat", "type": "CHAR(3)", "required": true }
+      ]
+    },
+    "province": {
+      "description": "Tabella delle province",
+      "fields": [
+        { "name": "id", "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        { "name": "descrizione", "type": "CHAR(60)", "required": true },
+        { "name": "targa", "type": "CHAR(2)", "required": true }
+      ]
+    },
+    "comuni": {
+      "description": "Tabella dei comuni",
+      "fields": [
+        { "name": "id", "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        { "name": "descrizione", "type": "CHAR(60)", "required": true },
+        { "name": "cod_istat", "type": "INTEGER", "required": true },
+        { "name": "cod_cf", "type": "CHAR(4)", "required": true }
+      ]
+    },
+    "codici_iva": {
+      "description": "Tabella dei codici IVA",
+      "fields": [
+        { "name": "id", "type": "INTEGER", "primaryKey": true },
+        { "name": "percen", "type": "INTEGER", "required": true }
+      ]
+    },
+    "articoli": {
+      "description": "Tabella degli articoli",
+      "fields": [
+        { "name": "id", "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        { "name": "tipologia", "type": "CHAR(2)", "required": true },
+        { "name": "descrizione", "type": "CHAR(60)", "required": true },
+        { "name": "categ_olio", "type": "INTEGER", "references": "categorie_olio.id" },
+        { "name": "macroarea", "type": "INTEGER", "references": "macroaree.id" },
+        { "name": "origispeci", "type": "CHAR(20)" },
+        { "name": "flag_ps", "type": "BOOLEAN", "default": false },
+        { "name": "flag_ef", "type": "BOOLEAN", "default": false },
+        { "name": "flag_bio", "type": "BOOLEAN", "default": false },
+        { "name": "flag_conv", "type": "BOOLEAN", "default": false },
+        { "name": "cod_iva", "type": "INTEGER", "references": "codici_iva.id" },
+        { "name": "varieta", "type": "CHAR(40)" },
+        { "name": "flag_in_uso", "type": "BOOLEAN", "default": true },
+        { "name": "unita_misura", "type": "CHAR(3)", "required": true }
+      ]
+    },
+    "olive_to_oli": {
+      "description": "Tabella di collegamento tra olive e oli",
+      "fields": [
+        { "name": "id", "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        { "name": "cod_olive", "type": "INTEGER", "required": true, "references": "articoli.id" },
+        { "name": "cod_olio", "type": "INTEGER", "required": true, "references": "articoli.id" },
+        { "name": "flag_default", "type": "BOOLEAN", "default": false }
+      ]
+    },
+    "users": {
+      "description": "Tabella degli utenti",
+      "fields": [
+        { "name": "id", "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        { "name": "nome", "type": "CHAR(20)", "required": true },
+        { "name": "cognome", "type": "CHAR(20)", "required": true },
+        { "name": "ruolo", "type": "INTEGER", "required": true },
+        { "name": "username", "type": "TEXT", "required": true, "unique": true },
+        { "name": "password", "type": "TEXT", "required": true },
+        { "name": "email", "type": "TEXT", "required": true, "unique": true },
+        { "name": "ultimo_login", "type": "TIMESTAMP" },
+        { "name": "created_at", "type": "TIMESTAMP", "default": "CURRENT_TIMESTAMP" },
+        { "name": "updated_at", "type": "TIMESTAMP", "default": "CURRENT_TIMESTAMP" }
+      ]
+    },
+    "config": {
+      "description": "Tabella di configurazione",
+      "fields": [
+        { "name": "id", "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        { "name": "chiave", "type": "VARCHAR(50)", "required": true, "unique": true },
+        { "name": "valore", "type": "VARCHAR(255)", "required": true },
+        { "name": "descrizione", "type": "VARCHAR(255)" },
+        { "name": "categoria", "type": "VARCHAR(50)" },
+        { "name": "data_creazione", "type": "TIMESTAMP", "default": "CURRENT_TIMESTAMP" },
+        { "name": "data_modifica", "type": "TIMESTAMP", "default": "CURRENT_TIMESTAMP" }
+      ]
+    },
+    "syslog": {
+      "description": "Tabella dei log di sistema",
+      "fields": [
+        { "name": "id", "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        { "name": "livello", "type": "VARCHAR(10)", "required": true },
+        { "name": "messaggio", "type": "VARCHAR(255)", "required": true },
+        { "name": "dettagli", "type": "TEXT" },
+        { "name": "user_id", "type": "INTEGER", "references": "users.id" },
+        { "name": "ip_address", "type": "VARCHAR(45)" },
+        { "name": "data", "type": "TIMESTAMP", "default": "CURRENT_TIMESTAMP" }
+      ]
+    },
+    "aziende": {
+      "description": "Tabella delle aziende",
+      "fields": [
+        { "name": "id", "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        { "name": "descrizione", "type": "CHAR(40)", "required": true },
+        { "name": "codice", "type": "CHAR(5)", "required": true, "unique": true },
+        { "name": "created_at", "type": "TIMESTAMP", "default": "CURRENT_TIMESTAMP" },
+        { "name": "updated_at", "type": "TIMESTAMP", "default": "CURRENT_TIMESTAMP" }
+      ]
+    },
+    "user_aziende": {
+      "description": "Tabella di collegamento tra utenti e aziende",
+      "fields": [
+        { "name": "id", "type": "INTEGER", "primaryKey": true, "autoIncrement": true },
+        { "name": "user_id", "type": "INTEGER", "required": true, "references": "users.id" },
+        { "name": "azienda_id", "type": "INTEGER", "required": true, "references": "aziende.id" },
+        { "name": "created_at", "type": "TIMESTAMP", "default": "CURRENT_TIMESTAMP" }
+      ],
+      "uniqueConstraints": [
+        {
+          "fields": ["user_id", "azienda_id"],
+          "name": "user_azienda_unique"
+        }
+      ]
+    }
+  }
+}

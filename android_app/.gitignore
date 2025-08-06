@@ -1,0 +1,15 @@
+# Gradle
+.gradle/
+build/
+
+# Android Studio
+.idea/
+*.iml
+local.properties
+
+# Mac
+.DS_Store
+
+# Captures and logs
+captures/
+*.log

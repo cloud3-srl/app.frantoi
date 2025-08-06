@@ -1,0 +1,112 @@
+1;I ;Italia;false;false;false;false;false;false;false;false
+2;E ;Spagna;false;false;false;false;false;false;false;false
+3;GR ;Grecia;false;false;false;false;false;false;false;false
+4;P ;Portogallo;false;false;false;false;false;false;false;false
+5;F ;Francia;false;false;false;false;false;false;false;false
+6;M ;Malta;false;false;false;false;false;false;false;false
+7;CY ;Cipro;false;false;false;false;false;false;false;false
+8;IBE ;Penisola Iberica;false;false;false;false;false;false;false;false
+9;TN ;Tunisia;false;false;false;false;false;false;false;false
+10;MA ;Marocco;false;false;false;false;false;false;false;false
+11;TR ;Turchia;false;false;false;false;false;false;false;false
+12;ET ;Egitto;false;false;false;false;false;false;false;false
+13;SYR ;Siria;false;false;false;false;false;false;false;false
+14;LAR ;Libia;false;false;false;false;false;false;false;false
+15;RL ;Libano;false;false;false;false;false;false;false;false
+16;HKJ ;Giordania;false;false;false;false;false;false;false;false
+17;DZ ;Algeria;false;false;false;false;false;false;false;false
+18;PS ;Palestina;false;false;false;false;false;false;false;false
+19;IL ;Israele;false;false;false;false;false;false;false;false
+20;RCH ;Cile;false;false;false;false;false;false;false;false
+21;RA ;Argentina;false;false;false;false;false;false;false;false
+22;AUS ;Australia;false;false;false;false;false;false;false;false
+23;ALT ;Altro 23;false;false;false;false;false;false;false;false
+24;;ALTO CROTONESE;false;true;true;true;true;true;true;true
+25;;APRUTINO PESCARESE;false;true;true;true;true;true;true;true
+26;;BRISIGHELLA;false;true;true;true;true;true;true;true
+28;;BRUZIO - FASCIA PREPOLLINICA;false;true;true;false;true;true;true;true
+29;;BRUZIO - VALLE CRATI;false;true;true;false;true;true;true;true
+30;;BRUZIO - COLLINE JONICHE PRESILANE;false;true;true;false;true;true;true;true
+31;;BRUZIO - SIBARITIDE;false;true;true;false;true;true;true;true
+32;;CANINO;false;true;true;false;true;true;true;true
+33;;CARTOCETO;false;true;true;false;true;true;true;true
+34;;CHIANTI CLASSICO;false;true;true;false;true;true;true;true
+35;;CILENTO;false;true;true;true;true;true;true;true
+36;;COLLINA DI BRINDISI;false;true;true;true;true;true;true;true
+37;;IRPINIA - COLLINE DELL'UFITA;false;true;true;false;true;true;true;true
+38;;COLLINE DI ROMAGNA;false;true;true;true;true;true;true;true
+39;;COLLINE PONTINE;false;true;true;true;true;true;true;true
+40;;COLLINE SALERNITANE;false;true;true;true;true;true;true;true
+41;;COLLINE TEATINE;false;true;true;false;true;true;true;true
+42;;COLLINE TEATINE - FRENTANO;false;true;true;false;true;true;true;true
+43;;COLLINE TEATINE - VASTESE;false;true;true;false;true;true;true;true
+45;;DAUNO - ALTO TAVOLIERE;false;true;true;false;true;true;true;true
+46;;DAUNO - BASSO TAVOLIERE;false;true;true;false;true;true;true;true
+47;;DAUNO - GARGANO;false;true;true;false;true;true;true;true
+48;;DAUNO - SUBAPPENNINO;false;true;true;false;true;true;true;true
+49;;GARDA;false;true;true;true;true;true;true;true
+50;;GARDA - BRESCIANO;false;true;true;true;true;true;true;true
+51;;GARDA - ORIENTALE;false;true;true;true;true;true;true;true
+52;;GARDA - TRENTINO;false;true;true;true;true;true;true;true
+53;;SICILIA;false;true;true;true;true;true;true;true
+54;;LAGHI LOMBARDI;false;true;true;true;true;true;true;true
+55;;LAGHI LOMBARDI - SEBINO;false;true;true;true;true;true;true;true
+56;;LAGHI LOMBARDI - LARIO;false;true;true;true;true;true;true;true
+57;;LAMETIA;false;true;true;true;true;true;true;true
+58;;LUCCA;false;true;true;false;true;true;true;true
+59;;MOLISE;false;true;true;false;true;true;true;true
+60;;MONTE ETNA;false;true;true;true;true;true;true;true
+62;;MONTI IBLEI - MONTE LAURO;false;true;true;true;true;true;true;true
+63;;MONTI IBLEI - VAL D'ANAPO;false;true;true;true;true;true;true;true
+64;;MONTI IBLEI - VAL TELLARO;false;true;true;true;true;true;true;true
+65;;MONTI IBLEI - FRIGINTINI;false;true;true;true;true;true;true;true
+66;;MONTI IBLEI - GULFI;false;true;true;true;true;true;true;true
+67;;MONTI IBLEI - VALLE DELL'IRMINIO;false;true;true;true;true;true;true;true
+68;;MONTI IBLEI - CALATINO;false;true;true;true;true;true;true;true
+69;;MONTI IBLEI - TRIGONA-PANCALI;false;true;true;true;true;true;true;true
+70;;OLIO DI CALABRIA;false;true;true;true;true;true;true;true
+71;;PENISOLA SORRENTINA;false;true;true;true;true;true;true;true
+72;;PRETUZIANO DELLE COLLINE TERAMANE;false;true;true;false;true;true;true;true
+73;;RIVIERA LIGURE;false;false;false;true;true;true;true;true
+74;;RIVIERA LIGURE - RIVIERA DEI FIORI;false;true;true;false;true;true;true;true
+75;;RIVIERA LIGURE - RIVIERA DEL PONENTE SAVONESE;false;true;true;false;true;true;true;true
+77;;RIVIERA LIGURE - RIVIERA DI LEVANTE;false;true;true;false;true;true;true;true
+78;;SABINA;false;true;true;false;true;true;true;true
+79;;SARDEGNA;false;true;true;false;true;true;true;true
+80;;SEGGIANO;false;true;true;true;true;true;true;true
+81;;TERGESTE;false;true;true;true;true;true;true;true
+82;;TERRE AURUNCHE;false;true;true;true;true;true;true;true
+83;;TERRE DI BARI;false;true;true;true;true;true;true;true
+84;;TERRE DI BARI - CASTEL DEL MONTE;false;true;true;true;true;true;true;true
+85;;TERRE DI BARI - BITONTO;false;true;true;true;true;true;true;true
+86;;TERRE DI BARI -MURGIA DEI TRULLI E DELLE GROTTE;false;true;true;true;true;true;true;true
+87;;TERRE D'OTRANTO;false;true;true;true;true;true;true;true
+88;;TERRE SIENA;false;true;true;true;true;true;true;true
+89;;TERRE TARENTINE;false;true;true;true;true;true;true;true
+90;;TOSCANO;false;true;false;false;false;true;true;true
+91;;TOSCANO - SEGGIANO DOP;true;false;false;false;true;true;true;true
+92;;TOSCANO - COLLINE LUCCHESI;false;true;true;false;false;true;true;true
+93;;TOSCANO - COLLINE DELLA LUNIGIANA;false;true;true;false;false;true;true;true
+94;;TOSCANO - COLLINE DI AREZZO;false;true;true;false;false;true;true;true
+95;;TOSCANO - COLLINE SENESI;false;true;true;false;false;true;true;true
+96;;TOSCANO - COLLINE DI FIRENZE;false;true;true;false;false;true;true;true
+97;;TOSCANO - MONTALBANO;false;true;true;false;false;true;true;true
+98;;TOSCANO - MONTI PISANI;false;true;true;false;false;true;true;true
+99;;TUSCIA;false;true;true;true;true;true;true;true
+101;;UMBRIA - COLLI ASSISI-SPOLETO;false;true;true;false;true;true;true;true
+102;;UMBRIA - COLLI MARTANI;false;true;true;false;true;true;true;true
+103;;UMBRIA - COLLI AMERINI;false;true;true;false;true;true;true;true
+104;;UMBRIA - COLLI DEL TRASIMENO;false;true;true;false;true;true;true;true
+105;;UMBRIA - COLLI ORVIETANI;false;true;true;false;true;true;true;true
+106;;VAL DI MAZARA;false;true;true;true;true;true;true;true
+107;;VALDEMONE;false;true;true;false;true;true;true;true
+108;;VALLE DEL BELICE;false;true;true;true;true;true;true;true
+109;;VALLI TRAPANESI;false;true;true;true;true;true;true;true
+111;;VULTURE;false;true;true;true;true;true;true;true
+112;;VENETO - EUGANEI E BERICI;false;true;true;false;true;true;true;true
+113;;VENETO - VENETO DEL GRAPPA;false;true;true;false;true;true;true;true
+114;;VENETO - VALPOLICELLA;false;true;true;false;true;true;true;true
+115;;IGP MARCHE;false;true;true;true;true;true;true;true
+116;;IGP OLIO DI PUGLIA;false;true;true;true;true;true;true;true
+117;;IGP OLIO LUCANO;false;true;true;true;true;true;true;true
+119;;MONTI IBLEI;false;true;true;true;true;true;true;true

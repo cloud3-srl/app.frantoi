@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guida al Deployment di AppFrantoi su Hetzner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        code {
+            background-color: #f7f7f7;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        pre {
+            background-color: #f7f7f7;
+            padding: 12px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-family: monospace;
+        }
+        .warning {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 12px;
+            margin: 16px 0;
+        }
+        .note {
+            background-color: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 12px;
+            margin: 16px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Guida al Deployment di AppFrantoi su Hetzner</h1>
+    
+    <h2>1. Preparazione del Server</h2>
+    
+    <h3>1.1 Accesso al Server</h3>
+    <p>Per accedere al server Hetzner utilizzare SSH:</p>
+    <pre>ssh root@95.216.204.86</pre>
+    
+    <div class="warning">
+        <strong>Attenzione:</strong> Le credenziali di accesso non dovrebbero essere incluse in documenti permanenti. Questo documento è solo per uso temporaneo.
+    </div>
+    
+    <h3>1.2 Aggiornamento del Sistema</h3>
+    <p>Prima di procedere, aggiornare il sistema operativo:</p>
+    <pre>apt update && apt upgrade -y</pre>
+    
+    <h3>1.3 Installazione di Docker e Docker Compose</h3>
+    <p>Installare Docker se non è già presente:</p>
+    <pre>
+# Rimuovere eventuali versioni precedenti
+apt remove docker docker-engine docker.io containerd runc
+
+# Installare i prerequisiti
+apt install -y apt-transport-https ca-certificates curl gnupg lsb-release
+
+# Aggiungere la GPG key ufficiale di Docker
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+# Aggiungere il repository Docker
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+# Aggiornare l'indice dei pacchetti
+apt update
+
+# Installare Docker Engine
+apt install -y docker-ce docker-ce-cli containerd.io
+
+# Installare Docker Compose
+curl -L "https://github.com/docker/compose/releases/download/v2.18.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+
+# Verificare l'installazione
+docker --version
+docker-compose --version
+</pre>
+
+    <h2>2. Configurazione del Firewall</h2>
+    <p>Configurare il firewall per consentire solo il traffico necessario:</p>
+    <pre>
+# Installare UFW se non è già presente
+apt install -y ufw
+
+# Permettere SSH per evitare di bloccarsi fuori dal server
+ufw allow ssh
+
+# Permettere HTTP e HTTPS
+ufw allow 80/tcp
+ufw allow 443/tcp
+
+# Abilitare il firewall
+ufw enable
+</pre>
+
+    <h2>3. Preparazione dell'Ambiente di Deployment</h2>
+    
+    <h3>3.1 Creazione della Directory del Progetto</h3>
+    <pre>
+# Creare una directory per il progetto
+mkdir -p /opt/appfrantoi
+cd /opt/appfrantoi
+</pre>
+
+    <h3>3.2 Trasferimento dei File di Deployment</h3>
+    <p>Copiare i file necessari dal sistema locale al server. È possibile utilizzare SCP o rsync:</p>
+    
+    <p>Dal sistema locale (eseguire in una nuova finestra del terminale):</p>
+    <pre>
+# Dalla directory del progetto locale
+cd /mnt/c/Users/Gabriele/CLOUD3\ SRL/File\ -\ Sviluppo/AppFrantoi/
+scp Dockerfile docker-compose.yml .dockerignore root@95.216.204.86:/opt/appfrantoi/
+</pre>
+
+    <p>Oppure utilizzare rsync per sincronizzare l'intero progetto:</p>
+    <pre>
+rsync -avz --exclude 'node_modules' --exclude '.git' /mnt/c/Users/Gabriele/CLOUD3\ SRL/File\ -\ Sviluppo/AppFrantoi/ root@95.216.204.86:/opt/appfrantoi/
+</pre>
+
+    <h2>4. Configurazione dell'Ambiente di Produzione</h2>
+    
+    <h3>4.1 Configurazione delle Variabili d'Ambiente</h3>
+    <p>Creare un file .env nella directory del progetto:</p>
+    <pre>
+# Sul server
+cd /opt/appfrantoi
+nano .env
+</pre>
+    
+    <p>Aggiungere le variabili d'ambiente necessarie:</p>
+    <pre>
+# Esempio di contenuto del file .env
+DATABASE_URL=postgresql://user:password@db:5432/appfrantoi
+NODE_ENV=production
+JWT_SECRET=un_segreto_molto_complesso_e_sicuro
+PORT=3000
+</pre>
+
+    <div class="note">
+        <strong>Nota:</strong> Utilizzare password e segreti sicuri per l'ambiente di produzione.
+    </div>
+
+    <h3>4.2 Configurazione di Docker Compose per la Produzione</h3>
+    <p>Modificare o verificare il file docker-compose.yml per assicurarsi che sia configurato correttamente per la produzione:</p>
+    <pre>
+# Sul server
+cd /opt/appfrantoi
+nano docker-compose.yml
+</pre>
+
+    <h2>5. Deployment dell'Applicazione</h2>
+    
+    <h3>5.1 Costruzione e Avvio dei Container</h3>
+    <pre>
+# Costruire e avviare i container in modalità detached
+cd /opt/appfrantoi
+docker-compose up -d --build
+</pre>
+
+    <h3>5.2 Verifica del Deployment</h3>
+    <pre>
+# Verificare che i container siano in esecuzione
+docker-compose ps
+
+# Verificare i log per eventuali errori
+docker-compose logs
+</pre>
+
+    <h2>6. Configurazione di un Proxy Inverso (Opzionale ma Raccomandato)</h2>
+
+    <h3>6.1 Installazione di Nginx</h3>
+    <pre>
+apt install -y nginx
+</pre>
+
+    <h3>6.2 Configurazione di Nginx come Proxy Inverso</h3>
+    <pre>
+# Creare un nuovo file di configurazione per il sito
+nano /etc/nginx/sites-available/appfrantoi
+</pre>
+
+    <p>Aggiungere la seguente configurazione:</p>
+    <pre>
+server {
+    listen 80;
+    server_name 95.216.204.86; # Sostituire con il dominio se disponibile
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+</pre>
+
+    <h3>6.3 Attivazione della Configurazione</h3>
+    <pre>
+# Creare un link simbolico per abilitare il sito
+ln -s /etc/nginx/sites-available/appfrantoi /etc/nginx/sites-enabled/
+
+# Verificare la configurazione di Nginx
+nginx -t
+
+# Riavviare Nginx se la configurazione è valida
+systemctl restart nginx
+</pre>
+
+    <h2>7. Configurazione SSL/TLS con Let's Encrypt (Opzionale ma Raccomandato)</h2>
+
+    <h3>7.1 Installazione di Certbot</h3>
+    <pre>
+# Installare Certbot e il plugin Nginx
+apt install -y certbot python3-certbot-nginx
+</pre>
+
+    <h3>7.2 Ottenere un Certificato SSL</h3>
+    <p>Se si dispone di un nome di dominio puntato al server:</p>
+    <pre>
+# Sostituire example.com con il dominio reale
+certbot --nginx -d example.com
+</pre>
+
+    <div class="note">
+        <strong>Nota:</strong> Per utilizzare Let's Encrypt è necessario avere un nome di dominio configurato per puntare al server.
+    </div>
+
+    <h2>8. Monitoraggio e Manutenzione</h2>
+
+    <h3>8.1 Backup del Database</h3>
+    <p>Configurare backup regolari del database:</p>
+    <pre>
+# Creare una directory per i backup
+mkdir -p /opt/appfrantoi/backups
+
+# Creare uno script di backup
+nano /opt/appfrantoi/backup-db.sh
+</pre>
+
+    <p>Contenuto dello script di backup:</p>
+    <pre>
+#!/bin/bash
+TIMESTAMP=$(date +"%Y%m%d-%H%M%S")
+BACKUP_DIR="/opt/appfrantoi/backups"
+CONTAINER_NAME="appfrantoi_db_1" # Verificare il nome esatto del container
+
+# Backup del database
+docker exec $CONTAINER_NAME pg_dump -U postgres appfrantoi > $BACKUP_DIR/appfrantoi_$TIMESTAMP.sql
+
+# Mantenere solo gli ultimi 7 backup
+ls -tp $BACKUP_DIR/*.sql | grep -v '/$' | tail -n +8 | xargs -I {} rm -- {}
+</pre>
+
+    <p>Rendere lo script eseguibile e configurare un cron job:</p>
+    <pre>
+chmod +x /opt/appfrantoi/backup-db.sh
+
+# Configurare un cron job per eseguire il backup ogni giorno alle 2:00
+crontab -e
+</pre>
+
+    <p>Aggiungere la seguente riga al crontab:</p>
+    <pre>0 2 * * * /opt/appfrantoi/backup-db.sh</pre>
+
+    <h3>8.2 Aggiornamenti dell'Applicazione</h3>
+    <p>Per aggiornare l'applicazione in futuro:</p>
+    <pre>
+cd /opt/appfrantoi
+
+# Scaricare gli aggiornamenti (ad esempio tramite rsync o git pull)
+# ...
+
+# Ricostruire e riavviare i container
+docker-compose down
+docker-compose up -d --build
+</pre>
+
+    <h2>9. Risoluzione dei Problemi</h2>
+    
+    <h3>9.1 Verificare i Log dei Container</h3>
+    <pre>
+# Visualizzare i log di tutti i container
+docker-compose logs
+
+# Visualizzare i log di un container specifico
+docker-compose logs app
+docker-compose logs db
+
+# Seguire i log in tempo reale
+docker-compose logs -f
+</pre>
+
+    <h3>9.2 Verificare lo Stato dei Container</h3>
+    <pre>
+docker-compose ps
+</pre>
+
+    <h3>9.3 Riavviare i Container</h3>
+    <pre>
+docker-compose restart
+</pre>
+
+    <h3>9.4 Ricostruire i Container</h3>
+    <pre>
+docker-compose down
+docker-compose up -d --build
+</pre>
+
+    <h2>10. Considerazioni sulla Sicurezza</h2>
+    
+    <ul>
+        <li>Cambiare la password di root dopo il primo accesso</li>
+        <li>Configurare l'autenticazione a chiave SSH e disabilitare l'accesso tramite password</li>
+        <li>Configurare fail2ban per proteggere da tentativi di accesso brute force</li>
+        <li>Aggiornare regolarmente il sistema operativo e i container Docker</li>
+        <li>Mantenere segreti e credenziali in variabili d'ambiente o in un gestore di segreti</li>
+    </ul>
+
+    <div class="warning">
+        <strong>Attenzione:</strong> Questa guida contiene credenziali di accesso temporanee. Rimuovere o modificare questo documento dopo l'uso.
+    </div>
+</body>
+</html>

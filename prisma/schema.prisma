@@ -1,0 +1,183 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// #### TABELLE COMUNI ####
+
+model categorie_olio {
+  id          Int        @id @default(autoincrement())
+  acronimo    String     @db.Char(3)
+  descrizione String     @db.VarChar(200)
+  articoli    articoli[]
+}
+
+model macroaree {
+  id          Int        @id @default(autoincrement())
+  acronimo    String     @db.Char(5) // Aumentato da 3 a 5 caratteri
+  descrizione String     @db.VarChar(200)
+  flag_orig   Boolean    @default(false)
+  articoli    articoli[]
+}
+
+model origini_specifiche {
+  id            Int     @id @default(autoincrement())
+  acronimo      String  @db.Char(3)
+  descrizione   String  @db.VarChar(200)
+  flag_dop      Boolean @default(false)
+  flag_raccolta Boolean @default(false)
+  flag_molitura Boolean @default(false)
+  flag_annata   Boolean @default(false)
+  flag_colla_da Boolean @default(false)
+  flag_colla_a  Boolean @default(false)
+  flag_capacita Boolean @default(false)
+  flag_certifi  Boolean @default(false)
+  // La relazione con xxxxx_terreni verrà gestita via codice
+}
+
+model nazioni {
+  id          Int    @id @default(autoincrement())
+  cod_nazione String @db.Char(3)
+  descrizione String @db.Char(60)
+  cod_istat   String @db.Char(3)
+  // La relazione con xxxxx_soggetti verrà gestita via codice
+}
+
+model province {
+  id          Int    @id @default(autoincrement())
+  descrizione String @db.Char(60)
+  targa       String @db.Char(2)
+  // La relazione con xxxxx_soggetti verrà gestita via codice
+}
+
+model comuni {
+  id          Int    @id @default(autoincrement())
+  descrizione String @db.Char(60)
+  cod_istat   Int
+  cod_cf      String @db.Char(4)
+  // La relazione con xxxxx_soggetti verrà gestita via codice
+}
+
+model codici_iva {
+  id       Int        @id
+  percen   Int
+  articoli articoli[]
+  // La relazione con xxxxx_listini verrà gestita via codice
+}
+
+model articoli {
+  id           Int     @id @default(autoincrement())
+  tipologia    String  @db.Char(2)
+  descrizione  String  @db.Char(60)
+  categ_olio   Int?
+  macroarea    Int?
+  origispeci   String? @db.Char(20)
+  flag_ps      Boolean @default(false)
+  flag_ef      Boolean @default(false)
+  flag_bio     Boolean @default(false)
+  flag_conv    Boolean @default(false)
+  cod_iva      Int?
+  varieta      String? @db.Char(40)
+  flag_in_uso  Boolean @default(true)
+  unita_misura String  @db.Char(3)
+
+  categoria categorie_olio? @relation(fields: [categ_olio], references: [id])
+  area      macroaree?      @relation(fields: [macroarea], references: [id])
+  iva       codici_iva?     @relation(fields: [cod_iva], references: [id])
+
+  olive_olio olive_to_oli[] @relation("Olive")
+  olio_olive olive_to_oli[] @relation("Olio")
+
+  // La relazione con xxxxx_soggetti e xxxxx_listini verrà gestita via codice
+}
+
+model olive_to_oli {
+  id           Int     @id @default(autoincrement())
+  cod_olive    Int
+  cod_olio     Int
+  flag_default Boolean @default(false)
+
+  olive articoli @relation("Olive", fields: [cod_olive], references: [id])
+  olio  articoli @relation("Olio", fields: [cod_olio], references: [id])
+}
+
+model users {
+  id               Int       @id @default(autoincrement())
+  nome             String    @db.Char(20)
+  cognome          String    @db.Char(20)
+  ruolo            Int
+  username         String    @unique
+  password         String
+  email            String    @unique
+  ultimo_login     DateTime?
+  email_verificata Boolean   @default(false)
+  token_verifica   String?   @db.VarChar(100)
+  data_token       DateTime?
+  profilo_completo Boolean   @default(false)
+  created_at       DateTime  @default(now())
+  updated_at       DateTime  @updatedAt
+
+  accessi user_aziende[]
+  logs    syslog[]
+}
+
+model config {
+  id             Int      @id @default(autoincrement())
+  chiave         String   @unique @db.VarChar(50)
+  valore         String   @db.VarChar(255)
+  descrizione    String?  @db.VarChar(255)
+  categoria      String?  @db.VarChar(50)
+  data_creazione DateTime @default(now())
+  data_modifica  DateTime @updatedAt
+}
+
+model syslog {
+  id         Int      @id @default(autoincrement())
+  livello    String   @db.VarChar(10)
+  messaggio  String   @db.VarChar(255)
+  dettagli   String?  @db.Text
+  user_id    Int?
+  ip_address String?  @db.VarChar(45)
+  data       DateTime @default(now())
+
+  user users? @relation(fields: [user_id], references: [id])
+}
+
+model aziende {
+  id                    Int      @id @default(autoincrement())
+  descrizione           String   @db.Char(40)
+  codice                String   @unique @db.Char(5)
+  ultimoidsoggetto      Int      @default(0)
+  coordinate            String?  @db.VarChar(20)
+  email_mittente        String?  @db.VarChar(100)
+  email_password        String?  @db.VarChar(100)
+  email_smtp_server     String?  @db.VarChar(100)
+  email_smtp_port       Int?
+  email_ssl             Boolean? @default(true)
+  email_default_oggetto String?  @db.VarChar(200)
+  email_firma           String?  @db.Text
+  created_at            DateTime @default(now())
+  updated_at            DateTime @updatedAt
+
+  utenti user_aziende[]
+}
+
+model user_aziende {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  azienda_id Int
+  created_at DateTime @default(now())
+
+  user    users   @relation(fields: [user_id], references: [id])
+  azienda aziende @relation(fields: [azienda_id], references: [id])
+
+  @@unique([user_id, azienda_id])
+}
+
+// Nota: Le tabelle specifiche per azienda (con prefisso xxxxx_) non possono essere definite
+// direttamente in Prisma poiché sono dinamiche e verranno create tramite SQL raw.
+// Implementeremo funzioni Node.js che gestiscono queste tabelle dinamicamente.

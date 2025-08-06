@@ -1,0 +1,14 @@
+1;ITA;Italia;N 
+2;PUE;Paese dell' Unione europea;S
+3;UE;Unione europea;N 
+4;EXT;Paese extra Unione europea;S 
+5;MXUE;Miscela di oli di oliva originari dell' Unione europea;N
+6;CUE;Combinazione Stati dell‟Unione europea/o regione dell‟Unione europea;S 
+7;MXN;Miscela di oli di oliva non originari dell‟Unione europea;N 
+8;CEX;Combinazione Stati non dell‟Unione europea/o regione extra Unione;S 
+9;MXX;Miscela di oli di oliva originari dell' Unione europea e non originari dell‟Unione;N 
+10;CCE;Combinazione Stati extra UE e UE/ combinazione di Regioni extra UE e UE;S 
+11;OSP;Olio (extra) vergine ottenuto nell‟Unione (o in un Stato membro) da olive raccolte nell‟Unione (o in un Stato membro o in un paese terzo);S 
+12;DOP;DOP/IGP;S
+13;ADD;Olio/olive atto a divenire DOP/IGP;S
+14;DOE;DOP/IGP (Estero);S 
